@@ -9,13 +9,13 @@ from flask import Flask, render_template, request
 app = Flask(__name__)
 
 # Charger le modèle pickle
-model = joblib.load("data/LGBM_Classifier_final_v2.pkl")
+model = joblib.load("LGBM_Classifier_final_v2.pkl")
 # Chargement de l'Explainer SHAP
-with open('data/explainer_v2.pkl', 'rb') as file:
+with open('explainer_v2.pkl', 'rb') as file:
     explainer = pickle.load(file)
 
 # Charger l'ensemble de données depuis un fichier CSV
-z1 = ZipFile("data/X_data_test.zip")
+z1 = ZipFile("X_data_test.zip")
 data = pd.read_csv(z1.open('X_data_test.csv'), encoding ='utf-8')
 #data = data.drop(["TARGET"], axis=1)
 @app.route("/")
@@ -126,6 +126,6 @@ def custom_score(y_pred):
     return str(score)
 
 if __name__ == "__main__":
-    app.run(host="localhost", port=8001, debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)
 
 
